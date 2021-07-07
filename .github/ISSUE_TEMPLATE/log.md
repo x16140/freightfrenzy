@@ -2,7 +2,7 @@
 name: Log
 about: Log something that happened
 title: ''
-labels: ''
+labels: log
 assignees: ''
 
 ---
