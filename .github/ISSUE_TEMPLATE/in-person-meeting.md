@@ -11,4 +11,4 @@ assignees: ''
 [DateTime]
 
 # Log
-- Item
+- [Item]
