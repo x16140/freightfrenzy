@@ -6,12 +6,10 @@ labels: meeting
 assignees: ''
 
 ---
-
+### Meeting Details
+8PM - 10PM
 # Tasks
-- [ ] Item
-
-# Meeting
-[DateTime]
+- [ ] 
 
 # Agenda
-- [Item]
+- 
