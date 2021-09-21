@@ -3,27 +3,41 @@ plugins {
     java
 }
 
-allprojects {
-    apply(plugin = "java")
+group = "io.arct.ftc"
+version = "0.1.0"
 
-    group = "io.arct.ftc"
-    version = "0.1.0"
+repositories {
+    mavenCentral()
+}
 
-    repositories {
-        mavenCentral()
+dependencies {
+    implementation(kotlin("stdlib"))
+
+    implementation(fileTree(mapOf("dir" to "libs/sdk", "include" to listOf("*.jar"))))
+}
+
+sourceSets {
+    main {
+        java.srcDirs("src/main/kotlin")
     }
 
-    dependencies {
-        implementation(kotlin("stdlib"))
+    test {
+        java.srcDirs()
     }
+}
 
-    sourceSets {
-        main {
-            java.srcDirs("src/main/kotlin")
-        }
+task<Exec>("dex") {
+    group = "android"
+    dependsOn(tasks.withType(Jar::class))
 
-        test {
-            java.srcDirs()
-        }
-    }
+    workingDir("./bin")
+    commandLine("cmd", "/c", "dex.bat")
+}
+
+task<Exec>("upload") {
+    group = "android"
+    dependsOn("dex")
+
+    workingDir("./bin")
+    commandLine("cmd", "/c", "upload.bat")
 }
