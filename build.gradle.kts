@@ -13,7 +13,9 @@ repositories {
 dependencies {
     implementation(kotlin("stdlib"))
 
+    implementation(fileTree(mapOf("dir" to "libs/android", "include" to listOf("*.jar"))))
     implementation(fileTree(mapOf("dir" to "libs/sdk", "include" to listOf("*.jar"))))
+    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 }
 
 sourceSets {
