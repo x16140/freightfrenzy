@@ -1,4 +1,4 @@
-package io.arct.util.extensions
+package com.aercie.util.extensions
 
 import kotlin.math.abs
 import kotlin.math.round

@@ -1,4 +1,4 @@
-package io.arct.util.units
+package com.aercie.util.units
 
 import kotlin.math.PI
 import kotlin.math.atan2
@@ -10,7 +10,8 @@ val Number.rev get() = Angle(toDouble() * 2 * PI)
 data class Angle(val rad: Double) {
     val deg = rad * 180.0 / PI
 
-    val normal: Angle get() {
+    val normal: Angle
+        get() {
         val r = deg % 360
 
         return when {
@@ -21,7 +22,8 @@ data class Angle(val rad: Double) {
         }.deg
     }
 
-    val general: Angle get() {
+    val general: Angle
+        get() {
         val r = normal.deg
 
         return when {

@@ -3,7 +3,7 @@ plugins {
     java
 }
 
-group = "io.arct.ftc"
+group = "com.aercie.ftc"
 version = "0.1.0"
 
 repositories {

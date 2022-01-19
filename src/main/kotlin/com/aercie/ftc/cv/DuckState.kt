@@ -1,4 +1,4 @@
-package io.arct.ftc.cv
+package com.aercie.ftc.cv
 
 enum class DuckState {
     A,

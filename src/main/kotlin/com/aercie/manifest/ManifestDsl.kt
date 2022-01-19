@@ -1,4 +1,4 @@
-package io.arct.manifest
+package com.aercie.manifest
 
 typealias Manifest = MutableList<ManifestEntry>
 

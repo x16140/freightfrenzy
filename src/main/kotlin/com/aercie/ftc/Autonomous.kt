@@ -1,4 +1,4 @@
-package io.arct.ftc
+package com.aercie.ftc
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 

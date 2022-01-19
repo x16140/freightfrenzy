@@ -1,12 +1,12 @@
-package io.arct.ftc.robot
+package com.aercie.ftc.robot
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.hardware.DcMotor
-import io.arct.util.extensions.normalize
-import io.arct.util.units.Angle
-import io.arct.util.units.deg
-import kotlin.math.cos
-import kotlin.math.sin
+import com.qualcomm.robotcore.hardware.Gamepad
+import com.aercie.util.extensions.normalize
+import com.aercie.util.units.Angle
+import com.aercie.util.units.deg
+import kotlin.math.*
 
 class Drive(
     vararg val motors: DcMotor,
@@ -48,6 +48,24 @@ class Drive(
         motors[1].power = speed
         motors[2].power = -speed
         motors[3].power = -speed
+
+        return this
+    }
+
+    fun gamepad(g: Gamepad, invertX: Boolean = false, invertY: Boolean = false): Drive {
+        move(
+            Angle.fromCoordinates(
+                g.left_stick_x * if (invertX) -1.0 else 1.0,
+                -g.left_stick_y * if (invertY) -1.0 else 1.0
+            ) ?: return this,
+
+            min(sqrt(g.left_stick_x.pow(2) + g.left_stick_y.pow(2)), 1f).toDouble()
+        )
+
+        if (g.left_stick_x == 0f && g.left_stick_y == 0f) turn(
+            g.right_stick_y * if (invertY) 1.0 else -1.0,
+            g.right_stick_x * if (invertX) -1.0 else 1.0
+        )
 
         return this
     }

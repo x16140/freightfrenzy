@@ -1,4 +1,4 @@
-package io.arct.ftc.cv
+package com.aercie.ftc.cv
 
 import android.graphics.Bitmap
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
@@ -107,7 +107,8 @@ class DuckDetector(
     }
 }
 
-val Bitmap.average: Color get() {
+val Bitmap.average: Color
+    get() {
     val total = width * height
     val pixels = IntArray(total)
 
