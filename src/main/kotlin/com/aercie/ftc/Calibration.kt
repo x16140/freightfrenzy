@@ -1,10 +1,12 @@
 package com.aercie.ftc
 
+import com.aercie.ftc.robot.IRobot
+import com.aercie.ftc.robot.Robot
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 
-class Calibration : OpMode() {
+class Calibration : OpMode(), IRobot by Robot() {
     override fun init() {
-        TODO("Not yet implemented")
+        init(this)
     }
 
     override fun loop() {

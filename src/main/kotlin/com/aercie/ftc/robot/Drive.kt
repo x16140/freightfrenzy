@@ -11,8 +11,37 @@ import kotlin.math.*
 class Drive(
     vararg val motors: DcMotor,
     var invert: Boolean = false,
-    val program: OpMode
+    val program: OpMode,
+    val multiplier: Double = 1.0,
 ) {
+    fun free() {
+        motors[0].mode = DcMotor.RunMode.RUN_USING_ENCODER
+        motors[1].mode = DcMotor.RunMode.RUN_USING_ENCODER
+        motors[2].mode = DcMotor.RunMode.RUN_USING_ENCODER
+        motors[3].mode = DcMotor.RunMode.RUN_USING_ENCODER
+    }
+
+    fun position() {
+        motors[0].mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
+        motors[1].mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
+        motors[2].mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
+        motors[3].mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
+
+        motors[0].mode = DcMotor.RunMode.RUN_TO_POSITION
+        motors[1].mode = DcMotor.RunMode.RUN_TO_POSITION
+        motors[2].mode = DcMotor.RunMode.RUN_TO_POSITION
+        motors[3].mode = DcMotor.RunMode.RUN_TO_POSITION
+    }
+
+    init {
+        motors[0].zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
+        motors[1].zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
+        motors[2].zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
+        motors[3].zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
+
+        free()
+    }
+
     fun move(direction: Angle, speed: Double): Drive {
         val dir = if (invert) -direction else direction
 
@@ -21,10 +50,35 @@ class Drive(
 
         val (x, y) = Double.normalize(a, b, upscale = true).map { speed * it }
 
-        motors[0].power = x
-        motors[1].power = y
+        motors[0].power = -x
+        motors[1].power = -y
         motors[2].power = x
         motors[3].power = y
+
+        return this
+    }
+
+    fun move(direction: Angle, speed: Double, position: Double): Drive {
+        val dir = if (invert) -direction else direction
+
+        val a = sin((dir + 45.deg).rad)
+        val b = cos((dir + 45.deg).rad)
+
+        val (x, y) = Double.normalize(a, b, upscale = true).map { speed * it }
+
+        val init = (motors[0].currentPosition + (-x * position)).toInt()
+        motors[0].targetPosition = (motors[0].currentPosition + (-x * position)).toInt()
+        motors[1].targetPosition = (motors[1].currentPosition + (-y * position)).toInt()
+        motors[2].targetPosition = (motors[2].currentPosition + (x * position)).toInt()
+        motors[3].targetPosition = (motors[3].currentPosition + (y * position)).toInt()
+
+        motors[0].power = -x
+        motors[1].power = -y
+        motors[2].power = x
+        motors[3].power = y
+
+        while (motors[0].currentPosition != init)
+            ;
 
         return this
     }
@@ -35,8 +89,8 @@ class Drive(
 
         val (l, r) = Double.normalize(a, b)
 
-        motors[0].power = l
-        motors[1].power = l
+        motors[0].power = -l
+        motors[1].power = -l
         motors[2].power = r
         motors[3].power = r
 
@@ -44,29 +98,46 @@ class Drive(
     }
 
     fun rotate(speed: Double): Drive {
-        motors[0].power = speed
-        motors[1].power = speed
+        motors[0].power = -speed
+        motors[1].power = -speed
         motors[2].power = -speed
         motors[3].power = -speed
 
         return this
     }
 
+    fun rotate(speed: Double, position: Double): Drive {
+        val init = (motors[0].currentPosition + (-speed * position)).toInt()
+        motors[0].targetPosition = (motors[0].currentPosition + (-speed * position)).toInt()
+        motors[1].targetPosition = (motors[1].currentPosition + (-speed * position)).toInt()
+        motors[2].targetPosition = (motors[2].currentPosition + (-speed * position)).toInt()
+        motors[3].targetPosition = (motors[3].currentPosition + (-speed * position)).toInt()
+
+        motors[0].power = -speed
+        motors[1].power = -speed
+        motors[2].power = -speed
+        motors[3].power = -speed
+
+        while (motors[0].currentPosition != init)
+            ;
+
+        return this
+    }
+
     fun gamepad(g: Gamepad, invertX: Boolean = false, invertY: Boolean = false): Drive {
-        move(
+        if (g.left_stick_x == 0f && g.left_stick_y == 0f && (g.right_stick_y != 0f || g.right_stick_x != 0f)) {
+            return turn(
+                    g.right_stick_y * if (invertY) 1.0 else -1.0,
+                    g.right_stick_x * if (invertX) -1.0 else 1.0
+                )
+        }
+
+        return move(
             Angle.fromCoordinates(
                 g.left_stick_x * if (invertX) -1.0 else 1.0,
                 -g.left_stick_y * if (invertY) -1.0 else 1.0
-            ) ?: return this,
-
+            ) ?: Angle.Forward,
             min(sqrt(g.left_stick_x.pow(2) + g.left_stick_y.pow(2)), 1f).toDouble()
         )
-
-        if (g.left_stick_x == 0f && g.left_stick_y == 0f) turn(
-            g.right_stick_y * if (invertY) 1.0 else -1.0,
-            g.right_stick_x * if (invertX) -1.0 else 1.0
-        )
-
-        return this
     }
 }

@@ -68,7 +68,7 @@ data class Angle(val rad: Double) {
 
         fun fromCoordinates(x: Double, y: Double): Angle? =
             if (x > 1 || y > 1) null
-            else if (x != 0.0 || y != 0.0) (atan2(y, -x) * (180 / Math.PI) - 90).deg
+            else if (x != 0.0 || y != 0.0) (atan2(y, -x) * (180 / Math.PI) - 90).rad
             else null
 
         fun fromDegrees(deg: Number) =

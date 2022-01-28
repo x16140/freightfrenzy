@@ -53,22 +53,22 @@ class Debug : OpMode() {
         m6.power = gamepad2.right_stick_x.toDouble()
 
         if (!lb0 && gamepad1.left_bumper) {
-            s0p -= 0.05
+            s0p -= 0.01
             lb0 = true
         }
 
         if (!rb0 && gamepad1.right_bumper) {
-            s0p += 0.05
+            s0p += 0.01
             rb0 = true
         }
 
         if (!lb1 && gamepad2.left_bumper) {
-            s6p -= 0.05
+            s6p -= 0.01
             lb1 = true
         }
 
         if (!rb1 && gamepad2.right_bumper) {
-            s6p += 0.05
+            s6p += 0.01
             rb1 = true
         }
 
