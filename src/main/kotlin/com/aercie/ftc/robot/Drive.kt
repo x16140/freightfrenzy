@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.Gamepad
 import com.aercie.util.extensions.normalize
 import com.aercie.util.units.Angle
 import com.aercie.util.units.deg
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import kotlin.math.*
 
 class Drive(
@@ -48,7 +49,7 @@ class Drive(
         val a = sin((dir + 45.deg).rad)
         val b = cos((dir + 45.deg).rad)
 
-        val (x, y) = Double.normalize(a, b, upscale = true).map { speed * it }
+        val (x, y) = Double.normalize(a, b).map { speed * it }
 
         motors[0].power = -x
         motors[1].power = -y
@@ -58,27 +59,13 @@ class Drive(
         return this
     }
 
-    fun move(direction: Angle, speed: Double, position: Double): Drive {
-        val dir = if (invert) -direction else direction
+    fun move(direction: Angle, speed: Double, time: Long): Drive {
+        move(direction, speed)
 
-        val a = sin((dir + 45.deg).rad)
-        val b = cos((dir + 45.deg).rad)
-
-        val (x, y) = Double.normalize(a, b, upscale = true).map { speed * it }
-
-        val init = (motors[0].currentPosition + (-x * position)).toInt()
-        motors[0].targetPosition = (motors[0].currentPosition + (-x * position)).toInt()
-        motors[1].targetPosition = (motors[1].currentPosition + (-y * position)).toInt()
-        motors[2].targetPosition = (motors[2].currentPosition + (x * position)).toInt()
-        motors[3].targetPosition = (motors[3].currentPosition + (y * position)).toInt()
-
-        motors[0].power = -x
-        motors[1].power = -y
-        motors[2].power = x
-        motors[3].power = y
-
-        while (motors[0].currentPosition != init)
-            ;
+        if (program is LinearOpMode)
+            program.sleep(time)
+        else
+            Thread.sleep(time)
 
         return this
     }
@@ -137,6 +124,7 @@ class Drive(
                 g.left_stick_x * if (invertX) -1.0 else 1.0,
                 -g.left_stick_y * if (invertY) -1.0 else 1.0
             ) ?: Angle.Forward,
+
             min(sqrt(g.left_stick_x.pow(2) + g.left_stick_y.pow(2)), 1f).toDouble()
         )
     }

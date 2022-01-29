@@ -7,9 +7,11 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 
 class InitPersistence : LinearOpMode() {
     override fun runOpMode() {
-        PersistentObject.save(Secrets(
-            vuforia = "<key>",
-        ), "/sdcard/secrets.dat")
+        waitForStart()
+
+//        PersistentObject.save(Secrets(
+//            vuforia = "<key>",
+//        ), "/sdcard/secrets.dat")
 
         PersistentObject.save(Calibration(
             tpcm = 1.0,

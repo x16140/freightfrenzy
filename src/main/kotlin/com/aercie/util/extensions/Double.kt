@@ -13,7 +13,7 @@ fun Double.map(from: ClosedRange<Double>, to: ClosedRange<Double>): Double =
     if (to.start <= to.endInclusive) (this - from.start) * (to.endInclusive - to.start) / (from.endInclusive - from.start) + to.start
     else (to.endInclusive + to.start) - this.map(from, (to.endInclusive)..(to.start))
 
-fun Double.Companion.normalize(vararg values: Double, upscale: Boolean = false): List<Double> {
+fun Double.Companion.normalize(vararg values: Double): List<Double> {
     var max = 0.0
 
     for (value in values) {
@@ -23,11 +23,8 @@ fun Double.Companion.normalize(vararg values: Double, upscale: Boolean = false):
             max = v
     }
 
-    return if (max <= 1.0 && !upscale)
-        values.toList()
-    else
-        values.map { it / max }
+    return values.map { it / max }
 }
 
-fun List<Double>.normalize(upscale: Boolean = false): List<Double> =
-    Double.normalize(*this.toDoubleArray(), upscale = upscale)
+fun List<Double>.normalize(): List<Double> =
+    Double.normalize(*this.toDoubleArray())
