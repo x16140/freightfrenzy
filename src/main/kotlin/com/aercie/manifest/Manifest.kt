@@ -35,4 +35,18 @@ val programs = manifest {
         group = "Autonomous",
         type = ProgramType.Autonomous,
     )
+
+    program(
+        program = "com.aercie.ftc.AutonomousB",
+        name = "Autonomous B",
+        group = "Autonomous",
+        type = ProgramType.Autonomous,
+    )
+
+    program(
+        program = "com.aercie.ftc.AutonomousC",
+        name = "Autonomous C",
+        group = "Autonomous",
+        type = ProgramType.Autonomous,
+    )
 }

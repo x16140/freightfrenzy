@@ -16,10 +16,10 @@ class Drive(
     val multiplier: Double = 1.0,
 ) {
     fun free() {
-        motors[0].mode = DcMotor.RunMode.RUN_USING_ENCODER
-        motors[1].mode = DcMotor.RunMode.RUN_USING_ENCODER
-        motors[2].mode = DcMotor.RunMode.RUN_USING_ENCODER
-        motors[3].mode = DcMotor.RunMode.RUN_USING_ENCODER
+        motors[0].mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
+        motors[1].mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
+        motors[2].mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
+        motors[3].mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
     }
 
     fun position() {
@@ -67,12 +67,13 @@ class Drive(
         else
             Thread.sleep(time)
 
+        move(Angle.Forward, .0)
         return this
     }
 
     fun turn(speed: Double, rotationSpeed: Double): Drive {
-        val a = speed + if (rotationSpeed > 0) rotationSpeed else .0
-        val b = speed - if (rotationSpeed < 0) rotationSpeed else .0
+        val a = speed + if (rotationSpeed > 0) rotationSpeed * sign(speed) else .0
+        val b = speed - if (rotationSpeed < 0) rotationSpeed * sign(speed) else .0
 
         val (l, r) = Double.normalize(a, b)
 
@@ -93,21 +94,15 @@ class Drive(
         return this
     }
 
-    fun rotate(speed: Double, position: Double): Drive {
-        val init = (motors[0].currentPosition + (-speed * position)).toInt()
-        motors[0].targetPosition = (motors[0].currentPosition + (-speed * position)).toInt()
-        motors[1].targetPosition = (motors[1].currentPosition + (-speed * position)).toInt()
-        motors[2].targetPosition = (motors[2].currentPosition + (-speed * position)).toInt()
-        motors[3].targetPosition = (motors[3].currentPosition + (-speed * position)).toInt()
+    fun rotate(speed: Double, time: Long): Drive {
+        rotate(speed)
 
-        motors[0].power = -speed
-        motors[1].power = -speed
-        motors[2].power = -speed
-        motors[3].power = -speed
+        if (program is LinearOpMode)
+            program.sleep(time)
+        else
+            Thread.sleep(time)
 
-        while (motors[0].currentPosition != init)
-            ;
-
+        move(Angle.Forward, .0)
         return this
     }
 

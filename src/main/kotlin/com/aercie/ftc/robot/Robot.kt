@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.Servo
 
 class Robot : IRobot {
     object Config {
-        val bucket = listOf(.60, .58, .00)
+        val bucket = listOf(.69,.65, .00)
         var capstone = listOf(.3, .2)
     }
 
