@@ -26,7 +26,7 @@ class Drive : OpMode(), IRobot by Robot() {
             drive.rotate(spot)
 
         // Carousel
-        carousel(gamepad2.left_bumper.value.toDouble() - gamepad2.left_trigger)
+        carousel(gamepad2.right_bumper.value.toDouble() - gamepad2.left_bumper.value.toDouble())
 
         // Intake
         intake(gamepad2.b.value.toDouble() - gamepad2.x.value)
@@ -38,7 +38,7 @@ class Drive : OpMode(), IRobot by Robot() {
         bucket = bucketState
 
         gamepad2::dpad_up.onRising {
-            if (bucketState < 2)
+            if (bucketState < 3)
                 bucketState += 1
         }
 

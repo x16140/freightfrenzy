@@ -26,5 +26,21 @@ fun Double.Companion.normalize(vararg values: Double): List<Double> {
     return values.map { it / max }
 }
 
+fun Double.Companion.normalize2(vararg values: Double): List<Double> {
+    var max = 0.0
+
+    for (value in values) {
+        val v = abs(value)
+
+        if (v > max)
+            max = v
+    }
+
+    if (max <= 1.0)
+        return values.asList()
+
+    return values.map { it / max }
+}
+
 fun List<Double>.normalize(): List<Double> =
     Double.normalize(*this.toDoubleArray())

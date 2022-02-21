@@ -18,9 +18,11 @@ class DuckDetector(
 ) {
     object Config {
         val locations = listOf(
-            Rectangle(0, 0, 10, 10),
-            Rectangle(0, 0, 10, 10),
-            Rectangle(0, 0, 10, 10)
+            Rectangle(1280 - 270, 352, 270 - 217, 494 - 352),
+            Rectangle(1280 - 650, 357, 650 - 597, 449 - 357),
+            Rectangle(1280 - 1032, 366, 1032 - 974, 463 - 366)
+
+
         )
 
         val average = { p: List<Color> ->
@@ -38,7 +40,7 @@ class DuckDetector(
         }
 
         val distance = { (h, s, v): Color ->
-            val target = Color(60.0, 100.0, 100.0)
+            val target = Color(136.0, 41.7, 59.8)
             val weights = Triple(2.0, 1.0, 1.0)
 
             val dh = weights.first * (target.h - h).pow(2)

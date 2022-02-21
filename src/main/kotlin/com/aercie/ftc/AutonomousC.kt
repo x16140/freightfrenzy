@@ -29,7 +29,7 @@ class AutonomousC : LinearOpMode(), IRobot by Robot() {
         sleep(2700)
         linear(.0)
 
-        bucket = 2
+        bucket = 3
         sleep(1000)
 
         bucket = 1

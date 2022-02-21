@@ -20,6 +20,10 @@ class Autonomous : LinearOpMode(), IRobot by Robot() {
 
     private fun run() {
 //        val state = detect.scan(true)
+//        telemetry.addLine(state.toString())
+//        telemetry.update()
+//        sleep(5000)
+//        return
 
         drive.move(Angle.Left, 0.4, 1900)
         drive.move(Angle.Backward, 0.20, 700)
@@ -28,7 +32,7 @@ class Autonomous : LinearOpMode(), IRobot by Robot() {
         sleep(2700)
         linear(.0)
 
-        bucket = 2
+        bucket = 3
         sleep(1000)
 
         bucket = 1

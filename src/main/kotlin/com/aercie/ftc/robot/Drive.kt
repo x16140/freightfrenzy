@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.Gamepad
 import com.aercie.util.extensions.normalize
+import com.aercie.util.extensions.normalize2
 import com.aercie.util.units.Angle
 import com.aercie.util.units.deg
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
@@ -75,7 +76,7 @@ class Drive(
         val a = speed + if (rotationSpeed > 0) rotationSpeed * sign(speed) else .0
         val b = speed - if (rotationSpeed < 0) rotationSpeed * sign(speed) else .0
 
-        val (l, r) = Double.normalize(a, b)
+        val (l, r) = Double.normalize2(a, b)
 
         motors[0].power = -l
         motors[1].power = -l
