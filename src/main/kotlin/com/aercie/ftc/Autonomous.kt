@@ -25,8 +25,8 @@ class Autonomous : LinearOpMode(), IRobot by Robot() {
 //        sleep(5000)
 //        return
 
-        drive.move(Angle.Left, 0.6, 1060)
-        drive.move(Angle.Backward, 0.4, 200)
+        drive.move(Angle.Left, 0.6, 1150)
+        drive.move(Angle.Backward, 0.2, 200)
 
         linear(.75)
         sleep(2700)
