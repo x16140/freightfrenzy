@@ -25,8 +25,8 @@ class Autonomous : LinearOpMode(), IRobot by Robot() {
 //        sleep(5000)
 //        return
 
-        drive.move(Angle.Left, 0.4, 1900)
-        drive.move(Angle.Backward, 0.20, 700)
+        drive.move(Angle.Left, 0.6, 1060)
+        drive.move(Angle.Backward, 0.4, 200)
 
         linear(.75)
         sleep(2700)
@@ -38,28 +38,38 @@ class Autonomous : LinearOpMode(), IRobot by Robot() {
         bucket = 1
         sleep(1000)
 
-        linear(-.75)
-        sleep(1700)
+        linear(-.75 / 2)
+        sleep(5000)
         linear(.0)
 
-        drive.rotate(-0.4, 850)
-        drive.move(Angle.Backward, 0.4, 1800)
-        drive.move(Angle.Right, 0.4, 2000)
-        drive.rotate(0.4, 250)
-        drive.move(Angle.Backward, 0.2, 300)
+        drive.rotate(-0.8, 300)
+//        drive.move(Angle.Backward, 0.4, 1800)
+        drive.move(Angle.Backward, 0.6, 200)
+        drive.move(Angle.Right, 0.6, 2000)
 
-        carousel(.3)
-        sleep(5000)
+//        drive.move(Angle.Forward, 0.3, 270)
+//        drive.move(Angle.Right, 0.3, 600)
+
+//        drive.rotate(0.4, 250)
+        drive.move(Angle.Backward, 0.4, 600)
+
+        drive.rotate(0.2, 250)
+        drive.move(Angle.Backward, 0.4, 250)
+
+        drive.move(Angle.Backward, 0.1)
+        carousel(.5)
+        sleep(3000)
         carousel(.0)
+        drive.move(Angle.Backward, .0)
 
-        drive.rotate(.4, 400)
-        drive.move(Angle.Forward, 0.4, 1000)
-        drive.move(Angle.Left, 0.4, 600)
+        drive.rotate(.4, 700)
+//        drive.move(Angle.Forward, 0.4, 1000)
+        drive.move(Angle.Left, 0.6, 300)
         drive.move(Angle.Forward, 0.4, 1000)
 
-        drive.move(Angle.Backward, .8, 800)
-        drive.move(Angle.Right, .6, 800)
-        drive.move(Angle.Backward, .8, 1600)
+        drive.move(Angle.Backward, 1.0, 700)
+        drive.move(Angle.Right, 1.0, 800)
+        drive.move(Angle.Backward, .6, 1200)
     }
 
     override fun runOpMode() {

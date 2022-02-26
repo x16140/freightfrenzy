@@ -26,7 +26,7 @@ class Drive : OpMode(), IRobot by Robot() {
             drive.rotate(spot)
 
         // Carousel
-        carousel(gamepad2.right_bumper.value.toDouble() - gamepad2.left_bumper.value.toDouble())
+        carousel(gamepad2.right_bumper.value.toDouble() - gamepad2.left_bumper.value.toDouble() + gamepad2.right_trigger * 0.75 - gamepad2.left_trigger * 0.75)
 
         // Intake
         intake(gamepad2.b.value.toDouble() - gamepad2.x.value)
